@@ -27,6 +27,7 @@ jobs:
 
       # Build the image
       - run: ls
+      - run: pwd
 #       - run: ./jetson.sh
         
 #       - uses: actions/upload-artifact@v3
