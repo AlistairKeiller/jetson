@@ -21,10 +21,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Gives more space for actions
-      - uses: easimon/maximize-build-space@master
-        with:
-          overprovision-lvm: true
-          remove-android: true
+      # - uses: easimon/maximize-build-space@master
+      #   with:
+      #     overprovision-lvm: true
+      #     remove-android: true
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
