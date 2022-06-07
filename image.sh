@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo "Seting variables"
 RELEASE=bionic
 JETSON_NAME=jetski
@@ -21,10 +22,17 @@ debootstrap --arch=arm64 --foreign ${RELEASE} rootfs
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 
 
+echo "Setting network config" # this may not be nesseary
+echo "network:
+    version: 2
+    renderer: NetworkManager" | tee /etc/netplan/01-netconf.yaml
+
+
 echo "Setting repos"
 echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
+
 
 echo "Setting device name"
 echo "${JETSON_NAME}" | tee rootfs/etc/hostname
