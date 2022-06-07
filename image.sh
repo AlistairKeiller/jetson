@@ -61,8 +61,8 @@ rm JETSON_BSP.tbz2
 
 
 echo "Moving rootfs to BSP"
-rm -r ${WORK_DIR}/Linux_for_Tegra/rootfs
-mv ${WORK_DIR}/rootfs ${WORK_DIR}/Linux_for_Tegra
+rm -r Linux_for_Tegra/rootfs
+mv rootfs Linux_for_Tegra
 
 
 # echo "Applying jetson binaries"
