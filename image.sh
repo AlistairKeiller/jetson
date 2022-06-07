@@ -7,7 +7,7 @@ JETSON_USR=alistair
 JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
-BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
+BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v6.1/t210/jetson-210_linux_r32.6.1_aarch64.tbz2
 
 
 echo "Installing packages on host system"
@@ -16,7 +16,8 @@ apt install -y debootstrap qemu-user-static binfmt-support libxml2-utils schroot
 
 
 echo "Making rootfs"
-debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
+# debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
+debootstrap --arch=arm64 --foreign ${RELEASE} rootfs
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 
 
@@ -76,7 +77,7 @@ cd Linux_for_Tegra
 
 echo "Adding ${JETSON_USR} as user"
 cd tools
-./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD}
+./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
 
 
 echo "creating image"
