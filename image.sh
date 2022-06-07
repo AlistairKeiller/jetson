@@ -84,5 +84,9 @@ cd tools
 ./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
 
 
+echo "Printing available space" # For Debugging
+df -h
+
+
 echo "creating image"
 ./jetson-disk-image-creator.sh -o ../../JETSON.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}

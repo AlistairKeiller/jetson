@@ -23,8 +23,7 @@ jobs:
       # Gives more space for actions
       - uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 32768
-          overprovision-lvm: true
+          root-reserve-mb: 3276
           remove-dotnet: true
           remove-android: true
           remove-haskell: true
