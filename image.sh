@@ -41,7 +41,7 @@ directory=${WORK_DIR}/rootfs
 root-users=root
 type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
-schroot -c jetson-image ./schroot.sh
+schroot -c jetson-image bash ${WORK_DIR}/schroot.sh
 
 
 echo "Removing files that conflict with LT4" # might not be nessesary
