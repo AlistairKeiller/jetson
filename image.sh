@@ -44,6 +44,7 @@ type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
 
 pwd
+ls
 
 
 echo "Running schroot in rootfs"
