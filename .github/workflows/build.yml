@@ -25,10 +25,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Build the image
-      - run: |
-        sudo bash make_rootfs.sh
-        sudo bash make_image.sh
+      # Make rootfs
+      - run: sudo bash make_rootfs.sh
+
+      # Make image
+      - run: sudo bash make_image.sh
 
         
       - uses: actions/upload-artifact@v3
