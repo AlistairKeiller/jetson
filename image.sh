@@ -33,17 +33,13 @@ echo "Setting device name"
 echo "${JETSON_NAME}" | tee ${WORK_DIR}/rootfs/etc/hostname
 
 
-# echo "Setting up schroot on host system"
-# echo "[jetson-image]
-# directory=${WORK_DIR}/rootfs
-# root-users=root
-# type=directory" | tee /etc/schroot/chroot.d/jetson-image
+echo "Setting up schroot on host system"
+echo "[jetson-image]
+directory=${WORK_DIR}/rootfs
+root-users=root
+type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
-
-# echo "Entering schroot"
-# schroot -c jetson-image -u root
-
-schroot -d {WORK_DIR}/rootfs bash schroot.sh
+schroot -c jetson-image ./schroot.sh
 
 
 echo "Removing files that conflict with LT4" # might not be nessesary
