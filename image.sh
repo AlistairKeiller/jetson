@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Seting variables"
-RELEASE=jammy
+RELEASE=bionic
 JETSON_NAME=jetski
 JETSON_USR=alistair
 JETSON_PWD=password
