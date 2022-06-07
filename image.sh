@@ -20,12 +20,6 @@ debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 
 
-echo "Setting network config" # make sure this is nesseary
-echo "network:
-    version: 2
-    renderer: NetworkManager" | tee rootfs/etc/netplan/01-netconf.yaml
-
-
 echo "Setting repos" # remove restricted, universe, and multiverse if possible
 echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
@@ -44,6 +38,7 @@ type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
 echo "Running schroot script"
 bash schroot.sh
+schroot -c jetson-image bash pwd/schroot.sh
 
 
 # echo "Removing QEMU"

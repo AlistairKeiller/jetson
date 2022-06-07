@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Entering schroot"
-schroot -c jetson-image
-
 
 echo "Testing architecture"
 uname -m
