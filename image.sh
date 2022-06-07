@@ -12,7 +12,7 @@ BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-2
 
 echo "Installing packages on host system"
 apt update
-apt install -y debootstrap qemu-user-static binfmt-support schroot
+apt install -y debootstrap qemu-user-static binfmt-support libxml2-utils schroot
 
 
 echo "Making rootfs"
