@@ -29,6 +29,10 @@ echo "Setting device name"
 echo "${JETSON_NAME}" | tee rootfs/etc/hostname
 
 
+echo "Making ${JETSON_USR} a sudoer"
+echo "${JETSON_USR} ALL=(ALL) NOPASSWD: ALL" | tee rootfs/etc/sudoers.d/${JETSON_USR}
+
+
 echo "Setting up schroot on host system"
 echo "[jetson-image]
 directory=$(pwd)/rootfs
@@ -65,20 +69,15 @@ rm -r Linux_for_Tegra/rootfs
 mv rootfs Linux_for_Tegra
 
 
-# echo "Applying jetson binaries"
-# cd ${WORK_DIR}/Linux_for_Tegra/
-# ./apply_binaries.sh
+echo "Applying jetson binaries"
+cd Linux_for_Tegra
+./apply_binaries.sh
 
 
-# echo "Adding ${JETSON_USR} as user"
-# cd ${WORK_DIR}/Linux_for_Tegra/tools
-# ./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD}
+echo "Adding ${JETSON_USR} as user"
+cd tools
+./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD}
 
 
-# echo "Making ${JETSON_USR} a sudoer"
-# echo "${JETSON_USR} ALL=(ALL) NOPASSWD: ALL" | tee ${WORK_DIR}/Linux_for_Tegra/rootfs/etc/sudoers.d/${JETSON_USR}
-
-
-# echo "creating image"
-# cd ${WORK_DIR}/Linux_for_Tegra/tools
-# ./jetson-disk-image-creator.sh -o ${WORK_DIR}/JETSON.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
+echo "creating image"
+./jetson-disk-image-creator.sh -o ../../JETSON.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
