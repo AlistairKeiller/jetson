@@ -8,7 +8,6 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
-WORK_DIR=/home/runner/work/jetson/jetson
 
 
 echo "Installing packages on host system"
