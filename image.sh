@@ -17,28 +17,28 @@ apt install -y debootstrap qemu-user-static binfmt-support schroot
 
 
 echo "Making rootfs"
-debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} ${WORK_DIR}/rootfs
-cp /usr/bin/qemu-aarch64-static ${WORK_DIR}/rootfs/usr/bin/
+debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
+cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 
 
 echo "Setting network config" # make sure this is nesseary
 echo "network:
     version: 2
-    renderer: NetworkManager" | tee ${WORK_DIR}/rootfs/etc/netplan/01-netconf.yaml
+    renderer: NetworkManager" | tee rootfs/etc/netplan/01-netconf.yaml
 
 
 echo "Setting repos" # remove restricted, universe, and multiverse if possible
 echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse" | tee ${WORK_DIR}/rootfs/etc/apt/sources.list
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
 
 echo "Setting device name"
-echo "${JETSON_NAME}" | tee ${WORK_DIR}/rootfs/etc/hostname
+echo "${JETSON_NAME}" | tee rootfs/etc/hostname
 
 
 echo "Setting up schroot on host system"
 echo "[jetson-image]
-directory=${WORK_DIR}/rootfs
+directory=$(pwd)/rootfs
 root-users=root
 type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
@@ -48,7 +48,7 @@ ls
 
 
 echo "Running schroot in rootfs"
-schroot -c jetson-image bash ${WORK_DIR}/schroot.sh
+schroot -c jetson-image bash $(pwd)/schroot.sh
 
 
 # echo "Removing QEMU"
