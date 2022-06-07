@@ -1,5 +1,7 @@
 #!/bin/bash
 
+schroot -c jetson-image
+
 echo "Making rootfs ( part 2 / final )"
 /debootstrap/debootstrap --second-stage
 

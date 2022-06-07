@@ -43,12 +43,8 @@ root-users=root
 type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
 
-pwd
-ls
-
-
-echo "Running schroot in rootfs"
-schroot -c jetson-image bash $(pwd)/schroot.sh
+echo "Running schroot script"
+./schroot.sh
 
 
 # echo "Removing QEMU"
