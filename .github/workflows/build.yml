@@ -38,7 +38,7 @@ jobs:
       - run: sudo bash image.sh
 
       # Upload output
-      - uses: actions/upload-artifact@v3
-        with:
-          name: image
-          path: /home/runner/work/jetson/jetson/JETSON.img
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: image
+      #     path: /home/runner/work/jetson/jetson/JETSON.img

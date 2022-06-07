@@ -44,25 +44,25 @@ cat schroot.sh | schroot -c jetson-image
 # rm ${WORK_DIR}/rootfs/usr/bin/qemu-aarch64-static
 
 
-# echo "Removing files that conflict with LT4" # might not be nessesary
-# rm ${WORK_DIR}/rootfs/dev/random ${WORK_DIR}/rootfs/dev/urandom
+echo "Removing files that conflict with LT4" # might not be nessesary
+rm rootfs/dev/random rootfs/dev/urandom
 
 
-# echo "Downloading BSP tar"
-# wget -qO ${WORK_DIR}/JETSON_BSP.tbz2 ${BSP_URL}
+echo "Downloading BSP tar"
+wget -qO JETSON_BSP.tbz2 ${BSP_URL}
 
 
-# echo "Extracting BSP tar"
-# tar -jpxf ${WORK_DIR}/JETSON_BSP.tbz2 -C ${WORK_DIR}
+echo "Extracting BSP tar"
+tar -jpxf JETSON_BSP.tbz2
 
 
-# echo "Removing BSP tar"
-# rm ${WORK_DIR}/JETSON_BSP.tbz2
+echo "Removing BSP tar"
+rm JETSON_BSP.tbz2
 
 
-# echo "Moving rootfs to BSP"
-# rm -r ${WORK_DIR}/Linux_for_Tegra/rootfs
-# mv ${WORK_DIR}/rootfs ${WORK_DIR}/Linux_for_Tegra
+echo "Moving rootfs to BSP"
+rm -r ${WORK_DIR}/Linux_for_Tegra/rootfs
+mv ${WORK_DIR}/rootfs ${WORK_DIR}/Linux_for_Tegra
 
 
 # echo "Applying jetson binaries"
