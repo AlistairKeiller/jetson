@@ -22,13 +22,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Gives more space for actions
+      - uses: easimon/maximize-build-space@master
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       # Make rootfs
       - run: sudo bash image.sh
 
-        
+      # Upload output
       - uses: actions/upload-artifact@v3
         with:
           name: image
