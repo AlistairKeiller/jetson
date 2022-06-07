@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Making rootfs ( part 2 / final )"
+/debootstrap/debootstrap --second-stage
+
 echo "Generating locale"
 locale-gen en_US.UTF-8
 update-locale LC_ALL=en_US.UTF-8

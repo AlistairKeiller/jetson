@@ -1,23 +1,24 @@
 #!/bin/bash
 
 echo "Seting variables"
-RELEASE=bionic
+RELEASE=jammy
 JETSON_NAME=jetski
 JETSON_USR=alistair
 JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
-BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v6.1/t210/jetson-210_linux_r32.6.1_aarch64.tbz2
+BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 WORK_DIR=/home/runner/work/jetson/jetson
 
 
 echo "Installing packages on host system"
 apt update
-apt install -y debootstrap qemu-user-static binfmt-support schroot # make sure these packages are nessesary
+apt install -y debootstrap qemu-user-static binfmt-support schroot
 
 
-echo "Making rootfs" # I know qemu-debootstrap is depricated, but because its a wrapper for debootstrap, it has eiser syntax and identical output to just using debootstrap.
-qemu-debootstrap --arch=arm64 ${RELEASE} ${WORK_DIR}/rootfs
+echo "Making rootfs"
+debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} ${WORK_DIR}/rootfs
+cp /usr/bin/qemu-aarch64-static ${WORK_DIR}/rootfs/usr/bin/
 
 
 echo "Setting network config" # make sure this is nesseary
@@ -44,19 +45,23 @@ type=directory" | tee /etc/schroot/chroot.d/jetson-image
 schroot -c jetson-image bash ${WORK_DIR}/schroot.sh
 
 
+# echo "Removing QEMU"
+# rm ${WORK_DIR}/rootfs/usr/bin/qemu-aarch64-static
+
+
 echo "Removing files that conflict with LT4" # might not be nessesary
 rm ${WORK_DIR}/rootfs/dev/random ${WORK_DIR}/rootfs/dev/urandom
 
 
-echo "Downloading BSP"
+echo "Downloading BSP tar"
 wget -qO ${WORK_DIR}/JETSON_BSP.tbz2 ${BSP_URL}
 
 
-echo "Extracting BSP"
+echo "Extracting BSP tar"
 tar -jpxf ${WORK_DIR}/JETSON_BSP.tbz2 -C ${WORK_DIR}
 
 
-echo "Removing tar"
+echo "Removing BSP tar"
 rm ${WORK_DIR}/JETSON_BSP.tbz2
 
 
