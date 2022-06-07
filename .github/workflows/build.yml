@@ -19,14 +19,14 @@ jobs:
     runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Gives more space for actions
-      - uses: easimon/maximize-build-space@master
-        with:
-          root-reserve-mb: 32768
-          remove-dotnet: true
-          remove-android: true
-          remove-haskell: true
+    # steps:
+    #   # Gives more space for actions
+    #   - uses: easimon/maximize-build-space@master
+    #     with:
+    #       root-reserve-mb: 32768
+    #       remove-dotnet: true
+    #       remove-android: true
+    #       remove-haskell: true
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
