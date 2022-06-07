@@ -37,7 +37,7 @@ type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
 
 echo "Running schroot script"
-schroot -c jetson-image bash $(pwd)/schroot.sh
+echo schroot.sh | schroot -c jetson-image
 
 
 # echo "Removing QEMU"
