@@ -45,10 +45,6 @@ echo "Running schroot script"
 cat schroot.sh | schroot -c jetson-image
 
 
-# echo "Removing QEMU"
-# rm ${WORK_DIR}/rootfs/usr/bin/qemu-aarch64-static
-
-
 echo "Removing files that conflict with LT4" # might not be nessesary
 rm rootfs/dev/random rootfs/dev/urandom
 
