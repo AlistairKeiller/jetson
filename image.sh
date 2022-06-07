@@ -47,7 +47,7 @@ rm ${WORK_DIR}/rootfs/dev/random ${WORK_DIR}/rootfs/dev/urandom
 
 
 echo "Downloading BSP"
-wget -qO- ${WORK_DIR}/JETSON_BSP.tbz2 ${BSP_URL}
+wget -qO ${WORK_DIR}/JETSON_BSP.tbz2 ${BSP_URL}
 
 
 echo "Extracting BSP"
