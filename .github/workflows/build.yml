@@ -23,13 +23,8 @@ jobs:
       # Gives more space for actions
       - uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 8192
-          temp-reserve-mb: 8192
           swap-size-mb: 1024
           overprovision-lvm: true
-          remove-dotnet: true
-          remove-android: true
-          remove-haskell: true
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
