@@ -1,3 +1,6 @@
+echo "Seting variables"
+bash set_variables.sh
+
 echo "Removing files that conflict with LT4" # might not be nessesary
 rm ${WORK_DIR}/rootfs/dev/random ${WORK_DIR}/rootfs/dev/urandom
 
