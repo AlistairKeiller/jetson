@@ -9,7 +9,7 @@ JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 
 echo "Installing dependencies"
-sudo apt-get install libxml2-utils
+sudo apt-get install libxml2-utils qemu-user-static
 
 
 echo "Downloading BSP"
