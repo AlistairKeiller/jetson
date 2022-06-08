@@ -53,7 +53,7 @@ schroot -c jetson-image -- echo "console-setup console-setup/charmap47 select UT
 # do
 #     schroot -c jetson-image -- apt-get -y install ${package}
 # done
-echo apt-get -y install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
+echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
 schroot -c jetson-image -- sync
 schroot -c jetson-image -- apt-get clean
 schroot -c jetson-image -- sync
