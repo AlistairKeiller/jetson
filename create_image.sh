@@ -8,6 +8,9 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 
+echo "Installing dependencies"
+sudo apt-get install libxml2-utils
+
 
 echo "Downloading BSP"
 wget -qO jetson_bsp.tbz2 ${BSP_URL}
