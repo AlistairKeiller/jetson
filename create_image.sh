@@ -23,6 +23,7 @@ rm JETSON_BSP.tbz2
 
 echo "Building samplefs"
 cd Linux_for_Tegra/tools/samplefs
+sudo apt-get install qemu-user-static
 ./nv_build_samplefs.sh --abi aarch64 --distro ubuntu --version bionic
 
 
