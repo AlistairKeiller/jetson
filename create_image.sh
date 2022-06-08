@@ -48,23 +48,23 @@ deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main 
 
 echo "Installing packages"
 schroot -c jetson-image -- apt-get update
-for package in $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages)
-do
-    schroot -c jetson-image -- DEBIAN_FRONTEND=noninteractive apt-get -y install ${package}
-done
-# echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
+# for package in $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages)
+# do
+#     schroot -c jetson-image -- DEBIAN_FRONTEND=noninteractive apt-get -y install ${package}
+# done
+echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
 schroot -c jetson-image -- sync
 schroot -c jetson-image -- apt-get clean
 schroot -c jetson-image -- sync
 
 
 rm rootfs/usr/bin/qemu-aarch64-static
-rm -rf var/lib/apt/lists/*
-rm -rf dev/*
-rm -rf var/log/*
-rm -rf var/cache/apt/archives/*.deb
-rm -rf var/tmp/*
-rm -rf tmp/*
+rm -rf rootfs/var/lib/apt/lists/*
+rm -rf rootfs/dev/*
+rm -rf rootfs/var/log/*
+rm -rf rootfs/var/cache/apt/archives/*.deb
+rm -rf rootfs/var/tmp/*
+rm -rf rootfs/tmp/*
 
 
 echo "Applying binary patches"
