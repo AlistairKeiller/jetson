@@ -48,7 +48,7 @@ deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main 
 
 echo "Installing packages"
 schroot -c jetson-image -- apt-get update
-schroot -c jetson-image -- echo "console-setup   console-setup/charmap47 select  UTF-8" | debconf-set-selections
+schroot -c jetson-image -- echo "console-setup console-setup/charmap47 select UTF-8" | debconf-set-selections
 for package in $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages)
 do
     schroot -c jetson-image -- apt-get -y install ${package}
