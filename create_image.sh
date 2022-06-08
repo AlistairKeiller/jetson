@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Seting variables"
-RELEASE=bionic
+RELEASE=focal
 JETSON_NAME=jetski
 JETSON_USR=alistair
 JETSON_PWD=password
@@ -48,16 +48,13 @@ deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main 
 
 echo "Installing packages"
 schroot -c jetson-image -- apt-get update
-# for package in $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages)
-# do
-#     schroot -c jetson-image -- DEBIAN_FRONTEND=noninteractive apt-get -y install ${package}
-# done
-echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
+echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -d"=" -f1  tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
 schroot -c jetson-image -- sync
 schroot -c jetson-image -- apt-get clean
 schroot -c jetson-image -- sync
 
 
+echo "Removing conflicting and unnecessary files"
 rm rootfs/usr/bin/qemu-aarch64-static
 rm -rf rootfs/var/lib/apt/lists/*
 rm -rf rootfs/dev/*
