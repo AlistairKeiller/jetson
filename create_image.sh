@@ -38,4 +38,4 @@ cd ..
 
 echo "Creating image"
 cd tools
-./jetson-disk-image-creator.sh -o ../../jetson_img.img -b jetson-nano -r 300
+./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
