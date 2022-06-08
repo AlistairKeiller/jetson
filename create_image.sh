@@ -28,6 +28,12 @@ debootstrap --arch=arm64 --foreign ${RELEASE} rootfs
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
 
 
+echo "Setting repos"
+echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
+
+
 echo "Setting up schroot on host system"
 echo "[jetson-image]
 directory=$(pwd)/rootfs
