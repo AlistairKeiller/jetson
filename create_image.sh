@@ -9,7 +9,7 @@ JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 
 echo "Installing dependencies"
-sudo apt-get install libxml2-utils qemu-user-static
+sudo apt-get -q install libxml2-utils qemu-user-static
 
 
 echo "Downloading BSP"
@@ -36,6 +36,9 @@ cd ..
 ./apply_binaries.sh
 
 
-echo "Creating image"
+echo "Adding ${JETSON_USR} as user"
 cd tools
+./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
+
+echo "Creating image"
 ./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
