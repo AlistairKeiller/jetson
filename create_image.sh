@@ -50,19 +50,18 @@ echo "Installing packages"
 schroot -c jetson-image -- apt-get update
 schroot -c jetson-image -- echo "console-setup   console-setup/charmap47 select  UTF-8" | debconf-set-selections
 echo apt-get -y --no-install-recommends install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
-scroot -c jetson-image -- sync
+schroot -c jetson-image -- sync
 schroot -c jetson-image -- apt-get clean
 schroot -c jetson-image -- sync
 
 
-# rm "${target_qemu_path}"
-
-# rm -rf var/lib/apt/lists/*
-# rm -rf dev/*
-# rm -rf var/log/*
-# rm -rf var/cache/apt/archives/*.deb
-# rm -rf var/tmp/*
-# rm -rf tmp/*
+rm rootfs/usr/bin/qemu-aarch64-static
+rm -rf var/lib/apt/lists/*
+rm -rf dev/*
+rm -rf var/log/*
+rm -rf var/cache/apt/archives/*.deb
+rm -rf var/tmp/*
+rm -rf tmp/*
 
 
 echo "Applying binary patches"
