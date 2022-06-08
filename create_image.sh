@@ -22,16 +22,10 @@ rm jetson_bsp.tbz2
 cd Linux_for_Tegra
 
 
-echo "Making rootfs"
+echo "Starting debootstrap"
 # debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
 debootstrap --arch=arm64 --foreign ${RELEASE} rootfs
 cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
-
-
-echo "Setting repos"
-echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
 
 
 echo "Setting up schroot on host system"
@@ -41,8 +35,18 @@ root-users=root
 type=directory" | tee /etc/schroot/chroot.d/jetson-image
 
 
-echo "Installing packages in rootfs"
+echo "Finishing debootstrap"
 schroot -c jetson-image -- /debootstrap/debootstrap --second-stage
+
+
+echo "Setting repos"
+echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
+
+
+echo "Installing packages"
 schroot -c jetson-image -- apt-get update
 echo apt-get -y --no-install-recommends --allow-downgrades install $(xargs -a tools/samplefs/nvubuntu-bionic-aarch64-packages) | schroot -c jetson-image
 scroot -c jetson-image -- sync
