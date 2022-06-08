@@ -48,7 +48,8 @@ deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main 
 
 echo "Installing packages"
 schroot -c jetson-image -- apt-get update
-echo apt-get -y --no-install-recommends --allow-downgrades install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
+schroot -c jetson-image -- echo "console-setup   console-setup/charmap47 select  UTF-8" | debconf-set-selections
+echo apt-get -y --no-install-recommends install $(cut -f 1 -d "=" tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
 scroot -c jetson-image -- sync
 schroot -c jetson-image -- apt-get clean
 schroot -c jetson-image -- sync
