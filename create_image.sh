@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 echo "Seting variables"
 RELEASE=bionic
 JETSON_NAME=jetski
