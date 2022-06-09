@@ -88,9 +88,9 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
-# echo "Applying Pythop's patches"
-# cd ../nv_tegra
-# wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
+echo "Applying Pythop's patches"
+cd ../nv_tegra
+wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
 
 
 # echo "Removing conflicting and unnecessary files"
