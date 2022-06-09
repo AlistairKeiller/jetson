@@ -7,7 +7,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
-ADDITIONAL_PACKAGES=#lxqt
+ADDITIONAL_PACKAGES=lxqt
 
 echo "Installing dependencies"
 apt-get update
@@ -77,11 +77,6 @@ echo "network:
       dhcp4: true" | tee etc/netplan/config.yaml
 
 
-# echo "Applying debs with Pythop's patches"
-# cd ../nv_tegra
-# wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
-
-
 echo "Removing conflicting and unnecessary files"
 rm usr/bin/qemu-aarch64-static
 rm -rf var/lib/apt/lists/*
@@ -92,9 +87,14 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
+echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh"
+cd ../nv_tegra
+wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
+
+
 echo "Applying binaries"
 cd ..
-./apply_binaries.sh --deb
+./apply_binaries.sh
 
 
 echo "Adding ${JETSON_USR} as user"
