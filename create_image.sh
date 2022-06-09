@@ -48,7 +48,7 @@ deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main 
 
 echo "Installing packages"
 chroot . apt-get update
-echo apt-get -y install $(cut -d"=" -f1  ../tools/samplefs/nvubuntu-focal-desktop-aarch64-packages | xargs) | DEBIAN_FRONTEND=noninteractive chroot .
+echo apt-get -y install $(cut -d"=" -f1  ../tools/samplefs/nvubuntu-focal-minimal-aarch64-packages | xargs) | DEBIAN_FRONTEND=noninteractive chroot .
 chroot . sync
 chroot . apt-get clean
 chroot . sync
