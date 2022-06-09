@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Seting variables"
-RELEASE=focal
+RELEASE=bionic
 JETSON_NAME=jetski
 JETSON_USR=alistair
 JETSON_PWD=password
@@ -9,7 +9,7 @@ JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 
 echo "Installing dependencies"
-sudo apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils schroot
+sudo apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils
 
 
 echo "Downloading BSP"
@@ -19,52 +19,59 @@ wget -qO jetson_bsp.tbz2 ${BSP_URL}
 echo "Extracting BSP"
 tar -jpxf jetson_bsp.tbz2
 rm jetson_bsp.tbz2
-cd Linux_for_Tegra
+cd Linux_for_Tegra/rootfs
 
 
 echo "Starting debootstrap"
-# debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} rootfs
-debootstrap --arch=arm64 --foreign ${RELEASE} rootfs
-cp /usr/bin/qemu-aarch64-static rootfs/usr/bin/
+debootstrap --arch=arm64 --foreign ${RELEASE} . # add --variant=minbase later
+cp /usr/bin/qemu-aarch64-static usr/bin/
 
 
-echo "Setting up schroot on host system"
-echo "[jetson-image]
-directory=$(pwd)/rootfs
-root-users=root
-type=directory" | tee /etc/schroot/chroot.d/jetson-image
+echo "Mounting rootfs"
+mount /sys ./sys -o bind
+mount /proc ./proc -o bind
+mount /dev ./dev -o bind
+mount /dev/pts ./dev/pts -o bind
 
 
 echo "Finishing debootstrap"
-schroot -c jetson-image -- /debootstrap/debootstrap --second-stage
+chroot . /debootstrap/debootstrap --second-stage
 
 
 echo "Setting repos"
 echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main restricted universe multiverse" | tee rootfs/etc/apt/sources.list
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main restricted universe multiverse" | tee etc/apt/sources.list
 
 
 echo "Installing packages"
-schroot -c jetson-image -- apt-get update
-echo DEBIAN_FRONTEND=noninteractive apt-get -y install $(cut -d"=" -f1  tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | schroot -c jetson-image
-schroot -c jetson-image -- sync
-schroot -c jetson-image -- apt-get clean
-schroot -c jetson-image -- sync
+chroot . apt-get update
+echo apt-get -y install $(cut -d"=" -f1  ../tools/samplefs/nvubuntu-bionic-aarch64-packages | xargs) | DEBIAN_FRONTEND=noninteractive chroot .
+chroot . sync
+chroot . apt-get clean
+chroot . sync
+
+
+echo "Unmounting rootfs"
+umount ./sys
+umount ./proc
+umount ./dev/pts
+umount ./dev
 
 
 echo "Removing conflicting and unnecessary files"
-rm rootfs/usr/bin/qemu-aarch64-static
-rm -rf rootfs/var/lib/apt/lists/*
-rm -rf rootfs/dev/*
-rm -rf rootfs/var/log/*
-rm -rf rootfs/var/cache/apt/archives/*.deb
-rm -rf rootfs/var/tmp/*
-rm -rf rootfs/tmp/*
+rm usr/bin/qemu-aarch64-static
+rm -rf var/lib/apt/lists/*
+rm -rf dev/*
+rm -rf var/log/*
+rm -rf var/cache/apt/archives/*.deb
+rm -rf var/tmp/*
+rm -rf tmp/*
 
 
 echo "Applying binary patches"
+cd ..
 ./apply_binaries.sh
 
 
