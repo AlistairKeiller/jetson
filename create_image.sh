@@ -90,29 +90,18 @@ rm -rf tmp/*
 
 echo "Applying Pythop's patches"
 cd ../nv_tegra
-# wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
-wget -q https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff
-patch nv-apply-debs.sh < nv-apply-debs.diff
+wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
 
 
-# echo "Removing conflicting and unnecessary files"
-# rm usr/bin/qemu-aarch64-static
-# rm -rf var/lib/apt/lists/*
-# rm -rf dev/*
-# rm -rf var/log/*
-# rm -rf var/cache/apt/archives/*.deb
-# rm -rf var/tmp/*
-# rm -rf tmp/*
+echo "Applying binaries"
+cd ..
+./apply_binaries.sh
 
 
-# echo "Applying binaries"
-# cd ..
-# ./apply_binaries.sh
-
-# echo "Adding ${JETSON_USR} as user"
-# cd tools
-# ./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
+echo "Adding ${JETSON_USR} as user"
+cd tools
+./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
 
 
-# echo "Creating image"
-# ./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
+echo "Creating image"
+./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
