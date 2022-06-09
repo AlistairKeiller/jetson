@@ -32,10 +32,10 @@ chroot . /debootstrap/debootstrap --second-stage
 
 
 echo "Mounting rootfs"
-mount --bind /sys ./sys -o
-mount --bind /proc ./proc -o
-mount --bind /dev ./dev -o
-mount --bind /dev/pts ./dev/pts -o
+mount --bind /sys ./sys
+mount --bind /proc ./proc
+mount --bind /dev ./dev
+mount --bind /dev/pts ./dev/pts
 
 
 echo "test"
