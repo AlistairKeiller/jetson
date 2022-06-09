@@ -79,6 +79,16 @@ echo "network:
       dhcp4: true" | tee etc/netplan/config.yaml
 
 
+echo "Removing conflicting and unnecessary files"
+rm usr/bin/qemu-aarch64-static
+rm -rf var/lib/apt/lists/*
+rm -rf dev/*
+rm -rf var/log/*
+rm -rf var/cache/apt/archives/*.deb
+rm -rf var/tmp/*
+rm -rf tmp/*
+
+
 echo "Applying Pythop's patches"
 cd ../nv_tegra
 wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
