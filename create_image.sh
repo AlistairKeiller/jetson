@@ -48,6 +48,16 @@ chroot . apt-get -y install \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant
 
 
+echo "Generating locales"
+chroot . locale-gen en_US.UTF-8
+
+
+echo "Enabling services"
+echroot . systemctl enable ssh
+echroot . systemctl enable systemd-networkd
+
+
+
 echo "Unmounting rootfs"
 chroot . sync
 chroot . apt-get clean
