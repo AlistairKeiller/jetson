@@ -23,7 +23,7 @@ cd Linux_for_Tegra/rootfs
 
 
 echo "Starting debootstrap"
-debootstrap --arch=arm64 --foreign ${RELEASE} . # add --variant=minbase later
+debootstrap --variant=minbase --arch=arm64 --foreign ${RELEASE} . # add --variant=minbase later
 cp /usr/bin/qemu-aarch64-static usr/bin/
 
 
