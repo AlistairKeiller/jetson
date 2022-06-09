@@ -14,8 +14,7 @@ apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils
 
 
 echo "Downloading and Extracting BSP"
-wget -O- ${BSP_URL} | tar -xjp
-# rm *.nc.gz
+wget -qO- ${BSP_URL} | tar -xjp
 cd Linux_for_Tegra/rootfs
 rm README.txt
 
@@ -39,7 +38,7 @@ echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main rest
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main restricted universe multiverse
-deb http://ports.ubuntu.com/ubuntu-ports/ bionic main" | tee etc/apt/sources.list
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ bionic main" | tee etc/apt/sources.list
 
 
 echo "Installing packages"
@@ -47,10 +46,6 @@ chroot . apt-get update
 chroot . apt-get -y install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant
-
-
-echo "Generating locales"
-chroot . locale_gen en_US.UTF-8
 
 
 echo "Unmounting rootfs"
