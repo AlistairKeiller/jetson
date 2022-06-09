@@ -59,7 +59,6 @@ chroot . systemctl enable ssh
 chroot . systemctl enable systemd-networkd
 
 
-
 echo "Unmounting rootfs"
 chroot . sync
 chroot . apt-get clean
@@ -89,19 +88,19 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
-echo "Applying Pythop's patches"
-cd ../nv_tegra
-wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
+# echo "Applying Pythop's patches"
+# cd ../nv_tegra
+# wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
 
 
-echo "Removing conflicting and unnecessary files"
-rm usr/bin/qemu-aarch64-static
-rm -rf var/lib/apt/lists/*
-rm -rf dev/*
-rm -rf var/log/*
-rm -rf var/cache/apt/archives/*.deb
-rm -rf var/tmp/*
-rm -rf tmp/*
+# echo "Removing conflicting and unnecessary files"
+# rm usr/bin/qemu-aarch64-static
+# rm -rf var/lib/apt/lists/*
+# rm -rf dev/*
+# rm -rf var/log/*
+# rm -rf var/cache/apt/archives/*.deb
+# rm -rf var/tmp/*
+# rm -rf tmp/*
 
 
 echo "Applying binaries"
