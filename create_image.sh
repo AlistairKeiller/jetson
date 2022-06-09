@@ -87,7 +87,12 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
-echo "Applying binary patches"
+echo "Applying Pythop's patches"
+cd ../nv_tegra
+wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | bash nv-apply-debs.sh
+
+
+echo "Applying binaries"
 cd ..
 ./apply_binaries.sh
 
