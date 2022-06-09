@@ -7,7 +7,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
-ADDITIONAL_PACKAGES=nvidia-l4t-init
+ADDITIONAL_PACKAGES=
 
 echo "Installing dependencies"
 apt-get update
@@ -55,8 +55,8 @@ chroot . locale-gen en_US.UTF-8
 
 
 echo "Enabling services"
-echroot . systemctl enable ssh
-echroot . systemctl enable systemd-networkd
+chroot . systemctl enable ssh
+chroot . systemctl enable systemd-networkd
 
 
 
