@@ -7,6 +7,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
+ADDITIONAL_PACKAGES=nvidia-l4t-init
 
 echo "Installing dependencies"
 apt-get update
@@ -45,7 +46,8 @@ echo "Installing packages"
 chroot . apt-get update
 chroot . apt-get -y install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 \
-    bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant
+    bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
+    ${ADDITIONAL_PACKAGES}
 
 
 echo "Generating locales"
@@ -101,5 +103,5 @@ cd tools
 ./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
 
 
-echo "Creating image"
-./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
+# echo "Creating image"
+# ./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
