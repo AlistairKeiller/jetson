@@ -21,7 +21,7 @@ rm README.txt
 
 
 echo "Running debootstrap"
-debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} .
+debootstrap --arch=arm64 --foreign --variant=minbase --include=python3,python3-apt,python3-pip ${RELEASE} .
 cp /usr/bin/qemu-aarch64-static usr/bin/
 echo "nameserver 1.1.1.1" | tee etc/resolv.conf
 chroot . /debootstrap/debootstrap --second-stage
