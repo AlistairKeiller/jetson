@@ -11,7 +11,7 @@ jobs:
       - run: |
           git clone https://github.com/pythops/jetson-nano-image
           cd jetson-nano-image
-          JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs
+          export JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs
           sudo -E ./create-rootfs.sh
           pip install --user ansible
           export PATH=$HOME/.local/bin:$PATH
