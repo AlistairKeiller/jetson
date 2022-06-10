@@ -8,9 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: git clone https://github.com/pythops/jetson-nano-image
-        # git clone https://github.com/pythops/jetson-nano-image \
-        # cd jetson-nano-image \
+      - run: |
+        git clone https://github.com/pythops/jetson-nano-image \
+        cd jetson-nano-image
         # JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs \
         # sudo -E ./create-rootfs.sh \
         # pip install --user ansible \
