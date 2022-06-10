@@ -79,13 +79,13 @@ echo "network:
 
 
 echo "Removing conflicting and unnecessary files"
-rm usr/bin/qemu-aarch64-static
-rm -rf var/lib/apt/lists/*
-rm -rf dev/*
-rm -rf var/log/*
-rm -rf var/cache/apt/archives/*.deb
-rm -rf var/tmp/*
-rm -rf tmp/*
+# rm usr/bin/qemu-aarch64-static
+# rm -rf var/lib/apt/lists/*
+# rm -rf dev/*
+# rm -rf var/log/*
+# rm -rf var/cache/apt/archives/*.deb
+# rm -rf var/tmp/*
+# rm -rf tmp/*
 
 
 echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh"
