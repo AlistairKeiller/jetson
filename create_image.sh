@@ -7,6 +7,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
+SD_SIZE=128G
 
 
 echo "Installing dependencies"
@@ -104,4 +105,4 @@ cd tools
 
 
 echo "Creating image"
-./jetson-disk-image-creator.sh -o ../../jetson_image.img -b jetson-nano -r 300
+./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV} -s ${SD_SIZE}
