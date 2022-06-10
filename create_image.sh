@@ -72,6 +72,12 @@ if [ ${SSH} = true ] ; then
 fi
 if [ ${WIFI} == true ] ; then
  chroot . systemctl enable systemd-networkd
+ echo "network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: true" | tee etc/netplan/config.yaml
 fi
 
 
@@ -84,17 +90,6 @@ umount ./sys
 umount ./proc
 umount ./dev/pts
 umount ./dev
-
-
-if [ ${WIFI} == true ] ; then
- echo "Configuring netplan"
- echo "network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    eth0:
-      dhcp4: true" | tee etc/netplan/config.yaml
-fi
 
 
 echo "Removing conflicting and unnecessary files"
