@@ -8,6 +8,22 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 SD_SIZE=128G
+ADDITIONAL_PACKAGES=
+SSH=false
+WIFI=false
+LOCALES=false
+
+
+echo "Setting additional packges"
+if [ ${SSH} = true ] ; then
+ ADDITIONAL_PACKAGES+=" ssh"
+fi
+if [ ${WIFI} == true ] ; then
+ ADDITIONAL_PACKAGES+=" netplan.io"
+fi
+if [ ${LOCALES} == true ] ; then
+ ADDITIONAL_PACKAGES+=" locales"
+fi
 
 
 echo "Installing dependencies"
@@ -47,17 +63,24 @@ echo "Installing packages"
 chroot . apt-get update
 chroot . apt-get -y install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 \
-    bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
-    # lxqt
+    bash-completion build-essential cmake linux-firmware sudo \
+    ${ADDITIONAL_PACKAGES}
 
 
-echo "Generating locales"
-chroot . locale-gen en_US.UTF-8
+if [ ${LOCALES} == true ] ; then
+ echo "Generating locales"
+ chroot . locale-gen en_US.UTF-8
+fi
 
 
 echo "Enabling services"
-chroot . systemctl enable ssh
-chroot . systemctl enable systemd-networkd
+if [ ${SSH} = true ] ; then
+ chroot . systemctl enable ssh
+fi
+if [ ${WIFI} == true ] ; then
+ chroot . systemctl enable systemd-networkd
+fi
+
 
 
 echo "Unmounting rootfs"
@@ -70,13 +93,15 @@ umount ./dev/pts
 umount ./dev
 
 
-echo "Configuring netplan"
-echo "network:
+if [ ${WIFI} == true ] ; then
+ echo "Configuring netplan"
+ echo "network:
   version: 2
   renderer: networkd
   ethernets:
     eth0:
       dhcp4: true" | tee etc/netplan/config.yaml
+fi
 
 
 echo "Removing conflicting and unnecessary files"
@@ -105,4 +130,4 @@ cd tools
 
 
 echo "Creating image"
-./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV} -s ${SD_SIZE}
+./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
