@@ -7,7 +7,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
-ADDITIONAL_PACKAGES=lxqt sddm
+ADDITIONAL_PACKAGES=lxqt xorg
 
 echo "Installing dependencies"
 apt-get update
