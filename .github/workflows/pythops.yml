@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - run: |
-        git clone https://github.com/pythops/jetson-nano-image \
+        git clone https://github.com/pythops/jetson-nano-image
         cd jetson-nano-image
         # JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs \
         # sudo -E ./create-rootfs.sh \
