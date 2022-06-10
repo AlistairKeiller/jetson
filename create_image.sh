@@ -14,18 +14,6 @@ WIFI=false
 LOCALES=false
 
 
-echo "Setting additional packges"
-if [ ${SSH} = true ] ; then
- ADDITIONAL_PACKAGES+=" ssh"
-fi
-if [ ${WIFI} == true ] ; then
- ADDITIONAL_PACKAGES+=" netplan.io"
-fi
-if [ ${LOCALES} == true ] ; then
- ADDITIONAL_PACKAGES+=" locales"
-fi
-
-
 echo "Installing dependencies"
 apt-get update
 apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils
@@ -60,6 +48,15 @@ mount --bind /dev/pts ./dev/pts
 
 
 echo "Installing packages"
+if [ ${SSH} = true ] ; then
+ ADDITIONAL_PACKAGES+=" ssh"
+fi
+if [ ${WIFI} == true ] ; then
+ ADDITIONAL_PACKAGES+=" netplan.io"
+fi
+if [ ${LOCALES} == true ] ; then
+ ADDITIONAL_PACKAGES+=" locales"
+fi
 chroot . apt-get update
 chroot . apt-get -y install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 \
