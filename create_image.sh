@@ -56,14 +56,12 @@ chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 python3 \
     bash-completion build-essential cmake linux-firmware sudo locales \
+    pciutils udev usbutils
     ${ADDITIONAL_PACKAGES}
 
 
 echo "Generating locales"
 chroot . locale-gen en_US.UTF-8
-
-
-# set timezone ?
 
 
 echo "Enabling services"
@@ -79,7 +77,6 @@ if [ ${WIFI} == true ] ; then
     eth0:
       dhcp4: true" | tee etc/netplan/config.yaml
 fi
-
 
 
 echo "Unmounting rootfs"
