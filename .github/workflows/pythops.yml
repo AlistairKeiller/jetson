@@ -9,19 +9,19 @@ jobs:
 
     steps:
       - run: |
-        git clone https://github.com/pythops/jetson-nano-image
-        cd jetson-nano-image
-        # JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs \
-        # sudo -E ./create-rootfs.sh \
-        # pip install --user ansible \
-        # export PATH=$HOME/.local/bin:$PATH \
-        # cd ansible \
-        # sudo -E $(which ansible-playbook) jetson.yaml \
-        # export JETSON_NANO_BOARD=jetson-nano \
-        # export JETSON_NANO_REVISION=300 \
-        # export JETSON_BUILD_DIR=${{github.workspace}}/build \
-        # cd .. \
-        # sudo -E ./create-image.sh
+          git clone https://github.com/pythops/jetson-nano-image
+          cd jetson-nano-image
+          JETSON_ROOTFS_DIR=${{github.workspace}}/rootfs
+          sudo -E ./create-rootfs.sh
+          pip install --user ansible
+          export PATH=$HOME/.local/bin:$PATH
+          cd ansible
+          sudo -E $(which ansible-playbook) jetson.yaml
+          export JETSON_NANO_BOARD=jetson-nano
+          export JETSON_NANO_REVISION=300
+          export JETSON_BUILD_DIR=${{github.workspace}}/build
+          cd ..
+          sudo -E ./create-image.sh
 
       # Upload output
       - uses: actions/upload-artifact@v3
