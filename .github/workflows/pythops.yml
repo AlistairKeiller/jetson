@@ -1,4 +1,4 @@
-name: build pythops
+name: pythops
 
 on:
   workflow_dispatch:
@@ -8,7 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Make rootfs
       - run: |
         git clone https://github.com/pythops/jetson-nano-image \
         cd jetson-nano-image \
