@@ -7,14 +7,13 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
-SD_SIZE=128G
 ADDITIONAL_PACKAGES=
 SSH=false
 WIFI=false
 LOCALES=false
 
 
-echo "Installing dependencies"
+echo "Installing dependencies on host"
 apt-get update
 apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils
 
@@ -58,7 +57,7 @@ if [ ${LOCALES} == true ] ; then
  ADDITIONAL_PACKAGES+=" locales"
 fi
 chroot . apt-get update
-chroot . apt-get -y install \
+chroot . apt-get -y –no-install-recommends install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 \
     bash-completion build-essential cmake linux-firmware sudo \
     ${ADDITIONAL_PACKAGES}
@@ -111,7 +110,7 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
-echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh"
+echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh" # replace with my own patch
 cd ../nv_tegra
 wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
 
