@@ -73,7 +73,8 @@ Before=nvfb.service
 [Service]
 Type=oneshot
 ExecStart=/usr/lib/nvidia/resizefs/nvresizefs.sh
-ExecStartPost=systemctl disable nvresizefs.service && rm /etc/systemd/system/nvresizefs.service
+ExecStartPost=systemctl disable nvresizefs.service
+ExecStartPost=rm /etc/systemd/system/nvresizefs.service
 
 [Install]
 WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
