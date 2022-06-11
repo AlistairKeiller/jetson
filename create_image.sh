@@ -8,7 +8,6 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 ADDITIONAL_PACKAGES=
-SSH=false
 
 
 echo "Installing dependencies on host"
@@ -45,16 +44,11 @@ mount --bind /dev/pts ./dev/pts
 
 
 echo "Installing packages"
-if [ ${SSH} = true ] ; then
- ADDITIONAL_PACKAGES+=" ssh"
-fi
 chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 python3 \
-    bash-completion build-essential cmake linux-firmware sudo locales netplan.io udev \
+    bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
     ${ADDITIONAL_PACKAGES}
-#     pciutils udev usbutils \
-    
 
 
 echo "Generating locales"
@@ -63,9 +57,7 @@ chroot . locale-gen en_US.UTF-8
 
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
-if [ ${SSH} = true ] ; then
- chroot . systemctl enable ssh
-fi
+chroot . systemctl enable ssh
 
 
 echo "network:
