@@ -88,9 +88,12 @@ rm -rf var/tmp/*
 rm -rf tmp/*
 
 
-echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh" # replace with my own patch
+echo "Applying debs with Pythop's patches to nv-apply-debs.sh, which is called by apply_binaries.sh"
 cd ../nv_tegra
-wget -qO- https://raw.githubusercontent.com/pythops/jetson-nano-image/master/patches/nv-apply-debs.diff | patch nv-apply-debs.sh
+echo '200c197
+< LC_ALL=C PYTHONHASHSEED=0 chroot . dpkg -i --path-include="/usr/share/doc/*" "${deb_list[@]}"
+---
+> LC_ALL=C PYTHONHASHSEED=0 chroot . dpkg -i --force-overwrite --path-include="/usr/share/doc/*" "${deb_list[@]}"' | patch nv-apply-debs.sh
 
 
 echo "Applying binaries"
