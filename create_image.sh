@@ -72,7 +72,7 @@ Before=nvfb.service
 
 [Service]
 Type=oneshot
-ExecStart=/etc/systemd/nvresizefs.sh
+ExecStart=/usr/lib/nvidia/resizefs/nvresizefs.sh
 
 [Install]
 WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
