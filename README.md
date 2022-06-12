@@ -15,5 +15,8 @@ cd jetson
 sudo bash create_image.sh
 ```
 
+
+
+
 Credits:
-    I learned a lot about what type of packages need to be installed from, https://github.com/pythops/jetson-nano-image. I created this project, instead of using pythop's script, becuase I want an fast and convient way to get a fully configured desktop.
+    https://github.com/pythops/jetson-nano-image has been an amazing resource for which packages are nessesary or useful. I created this project, instead of using pythop's script, becuase I want an fast and convient way to get a fully configured desktop.
