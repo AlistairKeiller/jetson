@@ -2,6 +2,11 @@ name: release
 
 on:
   workflow_dispatch:
+    inputs:
+        tag:
+          required: true
+          type: string
+
 
 jobs:
   build:
@@ -16,5 +21,5 @@ jobs:
       # Upload output
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: ${{github.workspace}}/jetson_image.img
-          tag: v0.1
+          artifacts: ${{ github.workspace }}/jetson_image.img
+          tag: ${{ inputs.tag }}
