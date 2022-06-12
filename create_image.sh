@@ -50,7 +50,8 @@ chroot . apt-get -y --no-install-recommends install \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
     gdisk parted `# for nvresizefs.sh` \
     ca-certificates `# to allow using apt` \
-    onboard xorg lubuntu-desktop lxqt `# desktop envorment` \
+    onboard xorg `# desktop envorment requirments` \
+    lightdm-gtk-greeter lightdm lxde-icon-theme lxde-core lxde-common policykit-1 lxpolkit lxsession-logout gvfs-backends `# LXDE desktop environment` \
     ${ADDITIONAL_PACKAGES}
 
 
@@ -85,7 +86,6 @@ WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
 chroot . systemctl enable ssh
-chroot . systemctl enable sddm
 chroot . systemctl enable nvresizefs.service
 
 
