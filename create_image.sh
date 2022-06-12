@@ -50,7 +50,7 @@ chroot . apt-get -y --no-install-recommends install \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
     gdisk parted `# for nvresizefs.sh` \
     ca-certificates `# to allow using apt` \
-    onboard xorg lubuntu-desktop `# desktop envorment` \
+    onboard xorg lubuntu-desktop lxqt `# desktop envorment` \
     ${ADDITIONAL_PACKAGES}
 
 
