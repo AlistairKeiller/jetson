@@ -27,4 +27,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: image
-          path: ${{github.workspace}}/jetson-nano-image/jetson.img
+          path: ${{ github.workspace }}/jetson-nano-image/jetson.img
