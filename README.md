@@ -25,5 +25,5 @@ sudo bash create_image.sh
 4. The image will be created in ./jetson_image.img
 <br/>
 <br/>
-Credits:
+Credits:<br/>
     https://github.com/pythops/jetson-nano-image has been an amazing resource for which packages are nessesary or useful. I created this project, instead of using pythop's script, becuase I want an fast and convient way to get a fully configured desktop.
