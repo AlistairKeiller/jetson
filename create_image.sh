@@ -50,7 +50,7 @@ chroot . apt-get -y --no-install-recommends install \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
     gdisk parted `# for nvresizefs.sh` \
     ca-certificates `# to allow using apt` \
-    onboard xorg lubuntu-core `# desktop envorment` \
+    onboard xorg lxqt sddm `# desktop envorment` \
     ${ADDITIONAL_PACKAGES}
 
 
@@ -83,9 +83,9 @@ WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
 
 
 echo "Enabling services"
-chroot . systemctl enable nvresizefs.service
 chroot . systemctl enable systemd-networkd
-chroot . systemctl enable ssh 
+chroot . systemctl enable ssh
+chroot . systemctl enable nvresizefs.service 
 
 
 echo "Unmounting rootfs"
