@@ -51,7 +51,7 @@ chroot . apt-get -y --no-install-recommends install \
     gdisk parted `# for nvresizefs.sh` \
     ca-certificates `# to allow using apt` \
     onboard xorg `# desktop envorment requirments` \
-    lightdm-gtk-greeter lightdm lxde-icon-theme lxde-core lxde-common policykit-1 lxpolkit lxsession-logout gvfs-backends `# LXDE desktop environment` \
+    lxde `# LXDE desktop environment` \
     ${ADDITIONAL_PACKAGES}
 
 
