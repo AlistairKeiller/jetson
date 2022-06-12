@@ -85,7 +85,8 @@ WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
 chroot . systemctl enable ssh
-chroot . systemctl enable nvresizefs.service 
+chroot . systemctl enable sddm
+chroot . systemctl enable nvresizefs.service
 
 
 echo "Unmounting rootfs"
