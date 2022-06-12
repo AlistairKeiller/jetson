@@ -1,13 +1,16 @@
 #!/bin/bash
 echo "Seting variables"
-RELEASE=focal
 JETSON_NAME=jetski
 JETSON_USR=alistair
 JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
-BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
+DESKTOP_ENVIRONMENT=true
 ADDITIONAL_PACKAGES=
+
+# changing these may break the script
+RELEASE=focal
+BSP_URL=https://developer.nvidia.com/embedded/l4t/r32_release_v7.2/t210/jetson-210_linux_r32.7.2_aarch64.tbz2
 
 
 echo "Installing dependencies on host"
@@ -45,12 +48,14 @@ mount --bind /dev/pts ./dev/pts
 
 echo "Installing packages"
 chroot . apt-get update
+if( {$DESKTOP_ENVIRONMENT} == true ) ; then
+  ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
+fi
 chroot . apt-get -y --no-install-recommends install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 python3 \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
     gdisk parted `# for nvresizefs.sh` \
     ca-certificates `# to allow using apt` \
-    xorg lxde lightdm-gtk-greeter lightdm `# LXDE desktop environment` \
     ${ADDITIONAL_PACKAGES}
 
 
