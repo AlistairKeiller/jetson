@@ -48,7 +48,7 @@ mount --bind /dev/pts ./dev/pts
 
 echo "Installing packages"
 chroot . apt-get update
-if( {$DESKTOP_ENVIRONMENT} == true ) ; then
+if( ${DESKTOP_ENVIRONMENT} == true ) ; then
   ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
 fi
 chroot . apt-get -y --no-install-recommends install \
