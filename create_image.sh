@@ -49,15 +49,15 @@ mount --bind /dev/pts ./dev/pts
 
 echo "Installing packages"
 chroot . apt-get update
-chroot . apt-get -y --no-install-recommends install software-properties-common
 if( ${DESKTOP_ENVIRONMENT} == true ) ; then
   ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
 fi
 if( ${CUDA} == true ) ; then
+  chroot . apt-get -y --no-install-recommends install software-properties-common wget
   chroot . wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/cuda-ubuntu2004.pin
-  chroot . sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-  chroot . sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/3bf863cc.pub
-  chroot . sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/ /"
+  chroot . mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+  chroot . apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/3bf863cc.pub
+  chroot . add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/ /"
   ADDITIONAL_PACKAGES+=" cuda"
 fi
 chroot . apt-get update
