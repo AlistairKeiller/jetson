@@ -7,7 +7,8 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
-ADDITIONAL_PACKAGES=#ca-certificates
+ADDITIONAL_PACKAGES=
+#ca-certificates
 
 # changing these may break the script
 RELEASE=focal
