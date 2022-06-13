@@ -8,7 +8,7 @@ JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
 DISABLE_AUTOMATIC_SUSPEND=true
-ADDITIONAL_PACKAGES=git software-properties-common
+ADDITIONAL_PACKAGES="git software-properties-common"
 
 # changing these may break the script
 RELEASE=focal
@@ -101,7 +101,7 @@ if( ${DISABLE_AUTOMATIC_SUSPEND} == true ) ; then
   AllowSuspend=no
   AllowHibernation=no
   AllowSuspendThenHibernate=no
-  AllowHybridSleep=no" | tee etc/systemd/sleep.conf.d/nosuspend.conf
+  AllowHybridSleep=no" | tee etc/systemd/sleep.conf
 fi
 
 
