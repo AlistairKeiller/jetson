@@ -21,7 +21,10 @@ If you want the file to be publicly accessible or if you want a smaller download
 <br/>
 
 Creating an image ( On your Debian-based machine ):
-1. Clone the repository
+1. Clone the repository:
+```console
+git clone https://github.com/AlistairKeiller/jetson
+```
 2. CD into the repository:
 ```console
 cd jetson
