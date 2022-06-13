@@ -145,5 +145,5 @@ echo "Creating image"
 ./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
 
 echo "Removing Linux_for_Tegra folder"
-cd ..
+cd ../../
 rm -rf Linux_for_Tegra
