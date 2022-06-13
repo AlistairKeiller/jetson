@@ -93,15 +93,8 @@ if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
   WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
   chroot . systemctl enable nvresizefs.service
 fi
-
-
 if( ${DISABLE_AUTOMATIC_SUSPEND} == true ) ; then
-  echo "Disabling automatic suspend"
-  echo "[Sleep]
-  AllowSuspend=no
-  AllowHibernation=no
-  AllowSuspendThenHibernate=no
-  AllowHybridSleep=no" | tee etc/systemd/sleep.conf
+  sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 fi
 
 
