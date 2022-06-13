@@ -39,5 +39,6 @@ sudo bash create_image.sh
 <br/>
 <br/>
 
-Credits:<br/>
+Script Credits:<br/>
     https://github.com/pythops/jetson-nano-image has been an amazing resource for which packages are necessary or useful. I created this project instead of using Pythop's script because I wanted a fast and convenient way to get a fully configured desktop, and so I could learn in the process.
+    I used the cuda install script from https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=arm64-sbsa&Compilation=Native&Distribution=Ubuntu&target_version=20.04&target_type=deb_network
