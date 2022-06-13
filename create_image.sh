@@ -7,6 +7,7 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 CUDA=true
+AUTOMATIC_RESIZE_PARTITION=true
 ADDITIONAL_PACKAGES=
 
 # changing these may break the script
@@ -82,25 +83,24 @@ echo "network:
       dhcp4: true" | tee etc/netplan/config.yaml
 
 
-echo "Adding nvresizefs service"
-echo "[Unit]
-Description=Resize SD Card root partition and filesystem
-Before=nvfb.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/lib/nvidia/resizefs/nvresizefs.sh
-ExecStartPost=systemctl disable nvresizefs.service
-ExecStartPost=rm /etc/systemd/system/nvresizefs.service
-
-[Install]
-WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
-
-
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
 chroot . systemctl enable ssh
-chroot . systemctl enable nvresizefs.service
+if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
+  echo "[Unit]
+  Description=Resize SD Card root partition and filesystem
+  Before=nvfb.service
+
+  [Service]
+  Type=oneshot
+  ExecStart=/usr/lib/nvidia/resizefs/nvresizefs.sh
+  ExecStartPost=systemctl disable nvresizefs.service
+  ExecStartPost=rm /etc/systemd/system/nvresizefs.service
+
+  [Install]
+  WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
+  chroot . systemctl enable nvresizefs.service
+fi
 
 
 echo "Unmounting rootfs"
