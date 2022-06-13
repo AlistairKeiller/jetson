@@ -6,6 +6,7 @@ JETSON_PWD=password
 JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
+CUDA=true
 ADDITIONAL_PACKAGES=
 
 # changing these may break the script
@@ -48,9 +49,18 @@ mount --bind /dev/pts ./dev/pts
 
 echo "Installing packages"
 chroot . apt-get update
+chroot . apt-get -y --no-install-recommends install software-properties-common
 if( ${DESKTOP_ENVIRONMENT} == true ) ; then
   ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
 fi
+if( ${CUDA} == true ) ; then
+  chroot . wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/cuda-ubuntu2004.pin
+  chroot . sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
+  chroot . sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/3bf863cc.pub
+  chroot . sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/ /"
+  ADDITIONAL_PACKAGES+=" cuda"
+fi
+chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
     libgles2 libpangoft2-1.0-0 libxkbcommon0 libwayland-egl1 libwayland-cursor0 libunwind8 libasound2 libpixman-1-0 libjpeg-turbo8 libinput10 libcairo2 device-tree-compiler iso-codes libffi6 libncursesw5 libdrm-common libdrm2 libegl-mesa0 libegl1 libegl1-mesa libgtk-3-0 python2 python-is-python2 libgstreamer1.0-0 libgstreamer-plugins-bad1.0-0 python3 \
     bash-completion build-essential btrfs-progs cmake curl dnsutils htop iotop isc-dhcp-client iputils-ping kmod linux-firmware locales net-tools netplan.io pciutils python3-dev ssh sudo udev unzip usbutils neovim wpasupplicant \
