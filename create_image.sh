@@ -8,6 +8,7 @@ JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
 DISABLE_AUTOMATIC_SUSPEND=true
+CUDA=true
 ADDITIONAL_PACKAGES=git
 
 # changing these may break the script
@@ -54,6 +55,13 @@ if( ${DESKTOP_ENVIRONMENT} == true ) ; then
 fi
 if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
   ADDITIONAL_PACKAGES+=" gdisk parted"
+fi
+if( ${CUDA} == true ) ; then
+  chroot . apt-get update
+  chroot . apt-get -y --no-install-recommends install software-properties-common wget dirmngr gpg-agent
+  chroot . apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/cross-linux-sbsa/3bf863cc.pub
+  chroot . add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/cross-linux-sbsa/ /"
+  ADDITIONAL_PACKAGES+=" cuda-cross-sbsa"
 fi
 chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
