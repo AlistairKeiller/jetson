@@ -94,6 +94,14 @@ if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
 fi
 
 
+echo "Disabling automatic suspend"
+echo "[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowSuspendThenHibernate=no
+AllowHybridSleep=no" | tee etc/systemd/sleep.conf.d/nosuspend.conf
+
+
 echo "Unmounting rootfs"
 chroot . sync
 chroot . apt-get clean
