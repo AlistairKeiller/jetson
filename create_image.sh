@@ -55,11 +55,9 @@ fi
 if( ${CUDA} == true ) ; then
   chroot . apt-get update
   chroot . apt-get -y --no-install-recommends install software-properties-common wget dirmngr gpg-agent
-  chroot . wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/cuda-ubuntu2004.pin
-  chroot . mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-  chroot . apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/3bf863cc.pub
-  chroot . add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/sbsa/ /"
-  ADDITIONAL_PACKAGES+=" cuda"
+  chroot . sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/cross-linux-sbsa/3bf863cc.pub
+  chroot . sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/cross-linux-sbsa/ /"
+  ADDITIONAL_PACKAGES+=" cuda-cross-sbsa"
 fi
 chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
@@ -143,3 +141,7 @@ cd tools
 
 echo "Creating image"
 ./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
+
+echo "Removing Linux_for_Tegra folder"
+cd ..
+rm -rf Linux_for_Tegra
