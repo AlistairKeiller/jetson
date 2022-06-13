@@ -7,6 +7,7 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
+DISABLE_AUTOMATIC_SUSPEND=true
 ADDITIONAL_PACKAGES=git
 
 # changing these may break the script
@@ -94,12 +95,14 @@ if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
 fi
 
 
-echo "Disabling automatic suspend"
-echo "[Sleep]
-AllowSuspend=no
-AllowHibernation=no
-AllowSuspendThenHibernate=no
-AllowHybridSleep=no" | tee etc/systemd/sleep.conf.d/nosuspend.conf
+if( ${DISABLE_AUTOMATIC_SUSPEND} == true ) ; then
+  echo "Disabling automatic suspend"
+  echo "[Sleep]
+  AllowSuspend=no
+  AllowHibernation=no
+  AllowSuspendThenHibernate=no
+  AllowHybridSleep=no" | tee etc/systemd/sleep.conf.d/nosuspend.conf
+fi
 
 
 echo "Unmounting rootfs"
