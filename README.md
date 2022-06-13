@@ -1,5 +1,3 @@
-create_image.sh is a script that creates an image for an Nvidia Jetson SBC. So far, I have only tested it on a jetson nano B01.
-
 Flashing an image:
 1. flash the image onto your Jetson's SD card with your favorite flashing software. I like Balena Etcher because it has a great UI and will automatically decompress files.
 
