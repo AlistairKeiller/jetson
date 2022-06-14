@@ -7,7 +7,6 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
-DISABLE_AUTOMATIC_SCREEN_BLANK=true
 ADDITIONAL_PACKAGES="git software-properties-common"
 
 # changing these may break the script
@@ -92,12 +91,6 @@ if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
   [Install]
   WantedBy=multi-user.target" | tee etc/systemd/system/nvresizefs.service
   chroot . systemctl enable nvresizefs.service
-fi
-if( ${DISABLE_AUTOMATIC_SCREEN_BLANK} == true ) ; then
-  export DISPLAY=:0.0
-  chroot . xset s off
-  chroot . xset s noblank
-  chroot . xset -dpms
 fi
 
 
