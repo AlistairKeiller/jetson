@@ -94,10 +94,7 @@ if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
   chroot . systemctl enable nvresizefs.service
 fi
 if( ${DISABLE_AUTOMATIC_SCREEN_BLANK} == true ) ; then
-  export DISPLAY=:0.0
-  xset s off
-  xset s noblank
-  xset -dpms
+  chroot . export DISPLAY=:0.0 && xset s off && xset s noblank && xset -dpms
 fi
 
 
