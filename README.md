@@ -42,6 +42,3 @@ sudo bash create_image.sh
 Script Credits:
 <br/>
     https://github.com/pythops/jetson-nano-image has been an amazing resource for which packages are necessary or useful. I created this project instead of using Pythop's script because I wanted a fast and convenient way to get a fully configured desktop, and so I could learn in the process.
-    <br/>
-    <br/>
-    I used the disable suspend file change from https://wiki.debian.org/Suspend
