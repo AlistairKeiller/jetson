@@ -67,7 +67,10 @@ chroot . apt-get -y --no-install-recommends install \
 
 if( ${FORCE_NEW_GCC} == true ) ; then
   echo "Setting gcc to gcc-10"
-  update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 60 --slave /usr/bin/g++ g++ /usr/bin/g++-10
+  rm /usr/bin/gcc
+  rm /usr/bin/g++
+  ln -s /usr/bin/gcc-10 /usr/bin/gcc
+  ln -s /usr/bin/g++-10 /usr/bin/g++
 fi
 
 
