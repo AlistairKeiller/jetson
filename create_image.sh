@@ -7,7 +7,7 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
-ADDITIONAL_PACKAGES="git software-properties-common wget"
+ADDITIONAL_PACKAGES="git software-properties-common wget gcc-10 g++-10"
 
 # changing these may break the script
 RELEASE=focal
