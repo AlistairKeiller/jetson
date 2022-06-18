@@ -69,8 +69,8 @@ if( ${FORCE_NEW_GCC} == true ) ; then
   echo "Setting gcc to gcc-10"
   rm usr/bin/gcc
   rm usr/bin/g++
-  chroot . ln -s /usr/bin/gcc-10 /usr/bin/gcc
-  chroot . ln -s /usr/bin/g++-10 /usr/bin/g++
+  ln -s usr/bin/gcc-10 /usr/bin/gcc
+  ln -s usr/bin/g++-10 /usr/bin/g++
 fi
 
 
