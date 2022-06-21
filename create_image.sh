@@ -66,16 +66,13 @@ chroot . apt-get -y --no-install-recommends install \
 
 
 echo "Setting python to python2 ( required by python-jetson-gpio )"
-rm usr/bin/python
-ln -s /usr/bin/python2 usr/bin/python
+ln -sf /usr/bin/python2 usr/bin/python
 
 
 if( ${FORCE_NEW_GCC} == true ) ; then
   echo "Setting gcc to gcc-10"
-  rm usr/bin/gcc
-  rm usr/bin/g++
-  ln -s /usr/bin/gcc-10 usr/bin/gcc
-  ln -s /usr/bin/g++-10 usr/bin/g++
+  ln -sf /usr/bin/gcc-10 usr/bin/gcc
+  ln -sf /usr/bin/g++-10 usr/bin/g++
 fi
 
 
