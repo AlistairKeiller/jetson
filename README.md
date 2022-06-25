@@ -23,16 +23,16 @@ This script creates a minimal install of Ubuntu 20.04 for Nvidia Jetson.
 # Creating an image ( On your Debian-based machine ):
 
 1. Clone the repository:
-```console
+```bash
 git clone https://github.com/AlistairKeiller/jetson
 ```
 2. cd into the repository:
-```console
+```bash
 cd jetson
 ```
 3. Confgiure the variables in the top of the create_image.sh script
 4. Run the script with root permissions:
-```console
+```bash
 sudo bash create_image.sh
 ```
 5. The image will be created in ./jetson_image.img
