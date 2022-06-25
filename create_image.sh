@@ -21,23 +21,23 @@ apt-get -y install debootstrap qemu-user-static binfmt-support libxml2-utils
 
 
 echo "Downloading and Extracting BSP"
-wget -qO- ${BSP_URL} | tar -xjp
+wget -qO- $BSP_URL | tar -xjp
 cd Linux_for_Tegra/rootfs
 rm README.txt
 
 
 echo "Running debootstrap"
-debootstrap --arch=arm64 --foreign --variant=minbase ${RELEASE} .
+debootstrap --arch=arm64 --foreign --variant=minbase $RELEASE .
 cp /usr/bin/qemu-aarch64-static usr/bin/
 echo "nameserver 1.1.1.1" | tee etc/resolv.conf
 chroot . /debootstrap/debootstrap --second-stage
 
 
 echo "Setting repos"
-echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE} main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-updates main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-security main restricted universe multiverse
-deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports ${RELEASE}-backports main restricted universe multiverse
+echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports $RELEASE main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports $RELEASE-updates main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports $RELEASE-security main restricted universe multiverse
+deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports $RELEASE-backports main restricted universe multiverse
 deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ bionic main" | tee etc/apt/sources.list
 
 
@@ -49,13 +49,13 @@ mount --bind /dev/pts ./dev/pts
 
 
 echo "Installing packages"
-if [ ${DESKTOP_ENVIRONMENT} == true ] ; then
+if [ $DESKTOP_ENVIRONMENT == true ] ; then
   ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
 fi
-if [ ${AUTOMATIC_RESIZE_PARTITION} == true ] ; then
+if [ $AUTOMATIC_RESIZE_PARTITION == true ] ; then
   ADDITIONAL_PACKAGES+=" gdisk parted"
 fi
-if [ ${FORCE_NEW_GCC} == true ] ; then
+if [ $FORCE_NEW_GCC == true ] ; then
   ADDITIONAL_PACKAGES+=" gcc-10 g++-10"
 fi
 chroot . apt-get update
@@ -65,7 +65,7 @@ chroot . apt-get -y --no-install-recommends install \
     ${ADDITIONAL_PACKAGES}
 
 
-if [ ${FORCE_NEW_GCC} == true ] ; then
+if [ $FORCE_NEW_GCC == true ] ; then
   echo "Setting gcc to gcc-10"
   ln -sf /usr/bin/gcc-10 usr/bin/gcc
   ln -sf /usr/bin/g++-10 usr/bin/g++
@@ -88,7 +88,7 @@ echo "network:
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
 chroot . systemctl enable ssh
-if [ ${AUTOMATIC_RESIZE_PARTITION} == true ] ; then
+if [ $AUTOMATIC_RESIZE_PARTITION == true ] ; then
   echo "[Unit]
   Description=Resize SD Card root partition and filesystem
   Before=nvfb.service
@@ -138,10 +138,10 @@ cd ..
 ./apply_binaries.sh
 
 
-echo "Adding ${JETSON_USR} as user"
+echo "Adding $JETSON_USR as user"
 cd tools
-./l4t_create_default_user.sh -u ${JETSON_USR} -p ${JETSON_PWD} -n ${JETSON_NAME} --autologin --accept-license
+./l4t_create_default_user.sh -u $JETSON_USR -p $JETSON_PWD -n $JETSON_NAME --autologin --accept-license
 
 
 echo "Creating image"
-./jetson-disk-image-creator.sh -o ../../jetson_image.img -b ${JETSON_BOARD} -r ${JETSON_BOARD_REV}
+./jetson-disk-image-creator.sh -o ../../jetson_image.img -b $JETSON_BOARD -r $JETSON_BOARD_REV
