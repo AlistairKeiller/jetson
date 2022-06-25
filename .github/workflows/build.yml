@@ -5,7 +5,7 @@ on:
   push:
     branches: [ "main" ]
 
-  # run with manual dispatch
+  # run on manual dispatch
   workflow_dispatch:
 
 jobs:
