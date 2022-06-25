@@ -1,9 +1,11 @@
 name: build
 
 on:
+  # run on push to repo
   push:
     branches: [ "main" ]
 
+  # run with manual dispatch
   workflow_dispatch:
 
 jobs:
@@ -11,12 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Get repo content
       - uses: actions/checkout@v3
 
-      # Make rootfs
+      # Make image
       - run: sudo bash create_image.sh
 
-      # Upload output
+      # Upload image as artifact
       - uses: actions/upload-artifact@v3
         with:
           name: image
