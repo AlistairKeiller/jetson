@@ -1,6 +1,7 @@
 name: release
 
 on:
+  # Run on manual dispatch
   workflow_dispatch:
     inputs:
         tag:
@@ -13,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Get repo content
       - uses: actions/checkout@v3
 
-      # Make rootfs
+      # Make image
       - run: sudo bash create_image.sh
 
-      # compress img file
+      # compress image
       - run: sudo xz -T0 -9 ${{ github.workspace }}/jetson_image.img
 
       # Upload output
