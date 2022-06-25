@@ -49,13 +49,13 @@ mount --bind /dev/pts ./dev/pts
 
 
 echo "Installing packages"
-if( ${DESKTOP_ENVIRONMENT} == true ) ; then
+if [ ${DESKTOP_ENVIRONMENT} == true ] ; then
   ADDITIONAL_PACKAGES+=" xorg lxde lightdm-gtk-greeter lightdm"
 fi
-if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
+if [ ${AUTOMATIC_RESIZE_PARTITION} == true ] ; then
   ADDITIONAL_PACKAGES+=" gdisk parted"
 fi
-if( ${FORCE_NEW_GCC} == true ) ; then
+if [ ${FORCE_NEW_GCC} == true ] ; then
   ADDITIONAL_PACKAGES+=" gcc-10 g++-10"
 fi
 chroot . apt-get update
@@ -65,7 +65,7 @@ chroot . apt-get -y --no-install-recommends install \
     ${ADDITIONAL_PACKAGES}
 
 
-if( ${FORCE_NEW_GCC} == true ) ; then
+if [ ${FORCE_NEW_GCC} == true ] ; then
   echo "Setting gcc to gcc-10"
   ln -sf /usr/bin/gcc-10 usr/bin/gcc
   ln -sf /usr/bin/g++-10 usr/bin/g++
@@ -88,7 +88,7 @@ echo "network:
 echo "Enabling services"
 chroot . systemctl enable systemd-networkd
 chroot . systemctl enable ssh
-if( ${AUTOMATIC_RESIZE_PARTITION} == true ) ; then
+if [ ${AUTOMATIC_RESIZE_PARTITION} == true ] ; then
   echo "[Unit]
   Description=Resize SD Card root partition and filesystem
   Before=nvfb.service
