@@ -65,7 +65,7 @@ chroot . apt-get -y --no-install-recommends install \
     $ADDITIONAL_PACKAGES
 
 
-if [ $FORCE_NEW_GCC == true ] ; then
+if [ -v FORCE_GCC_VERSION ] ; then
   echo "Setting gcc to gcc-$FORCE_GCC_VERSION"
   ln -sf /usr/bin/gcc-$FORCE_GCC_VERSION usr/bin/gcc
   ln -sf /usr/bin/g++-$FORCE_GCC_VERSION usr/bin/g++
