@@ -7,7 +7,7 @@ JETSON_BOARD=jetson-nano
 JETSON_BOARD_REV=300
 DESKTOP_ENVIRONMENT=true
 AUTOMATIC_RESIZE_PARTITION=true
-FORCE_NEW_GCC=true
+FORCE_GCC_VERSION=10
 ADDITIONAL_PACKAGES="git software-properties-common gpg-agent wget"
 
 # changing these may break the script
@@ -55,8 +55,8 @@ fi
 if [ $AUTOMATIC_RESIZE_PARTITION == true ] ; then
   ADDITIONAL_PACKAGES+=" gdisk parted"
 fi
-if [ $FORCE_NEW_GCC == true ] ; then
-  ADDITIONAL_PACKAGES+=" gcc-10 g++-10"
+if [ -v FORCE_GCC_VERSION ] ; then
+  ADDITIONAL_PACKAGES+=" gcc-$FORCE_GCC_VERSION g++-$FORCE_GCC_VERSION"
 fi
 chroot . apt-get update
 chroot . apt-get -y --no-install-recommends install \
@@ -66,9 +66,9 @@ chroot . apt-get -y --no-install-recommends install \
 
 
 if [ $FORCE_NEW_GCC == true ] ; then
-  echo "Setting gcc to gcc-10"
-  ln -sf /usr/bin/gcc-10 usr/bin/gcc
-  ln -sf /usr/bin/g++-10 usr/bin/g++
+  echo "Setting gcc to gcc-$FORCE_GCC_VERSION"
+  ln -sf /usr/bin/gcc-$FORCE_GCC_VERSION usr/bin/gcc
+  ln -sf /usr/bin/g++-$FORCE_GCC_VERSION usr/bin/g++
 fi
 
 
