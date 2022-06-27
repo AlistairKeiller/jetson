@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 echo "Seting variables"
 JETSON_NAME=jetski
 JETSON_USR=alistair
